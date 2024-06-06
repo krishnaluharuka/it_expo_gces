@@ -3,6 +3,7 @@ session_start();
 include('../includes/connect.php');
 include('navbar1.php');
 include('../include_aboutus.php');
+$nameErr = $emailErr = $contactErr = "";
 if (isset($_POST['user_register']) && isset($_POST['user_email'])) {
     $user_username = $_POST['user_username'];
     $user_email = $_POST['user_email'];
@@ -17,6 +18,17 @@ if (isset($_POST['user_register']) && isset($_POST['user_email'])) {
     $user_type = $_POST['user_type'];
     $verify_token=md5(rand());
 
+
+    if (!preg_match("/^[a-zA-Z-' ]*$/", $user_username)) {
+            $nameErr = "Invalid company name. Only letters, spaces, and hyphens are allowed.";
+        }
+    if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+        $emailErr = "Invalid email format.";
+    }
+    if(!preg_match("/^\d{10}$/",$user_contact))
+    {
+        $contactErr= "Invalid contact number.Must be 10 digits.";
+    }
     // sendemail_verify("$user_username","$user_email","$verify_token");
     // echo "Sent or not";
 
@@ -95,17 +107,19 @@ if (isset($_POST['user_register']) && isset($_POST['user_email'])) {
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border shadow p-3 mb-3 mt-1">
                 <h1 class="text-center py-3">NEW <span class="px-4">REGISTRATION</span></h1><br>
 
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
                     <!-- username field-->
                     <div class="form-outline mb-4">
                         <label for="user_username" class="form-label">Username</label>
                         <input type="text" name="user_username" id="user_username" class="form-control" placeholder="Enter your username" autocomplete="off" required="required">
+                        <?php echo $nameErr; ?>
                     </div>
 
                     <!-- email field -->
                     <div class="form-outline mb-4">
                         <label for="user_email" class="form-label">User Email</label>
                         <input type="email" name="user_email" id="user_email" class="form-control" placeholder="Enter your email" autocomplete="off" required="required">
+                        <?php echo $emailErr; ?>
                     </div>
 
                     <!-- image field -->
@@ -137,6 +151,7 @@ if (isset($_POST['user_register']) && isset($_POST['user_email'])) {
                     <div class="form-outline mb-4">
                         <label for="user_contact" class="form-label">Contact</label>
                         <input type="text" name="user_contact" id="user_contact" class="form-control" placeholder="Enter your mobile number" autocomplete="off" required="required">
+                        <?php echo $contactErr; ?>
                     </div>
 
                     <!-- user type field-->
