@@ -38,7 +38,7 @@ include('include_aboutus.php');
       font-weight: bolder;
     }
 
-    bold {
+    .txt {
       font-size: 100%;
       text-shadow: 4px 4px 4px #aaa;
       font-weight: normal;
@@ -74,15 +74,15 @@ include('include_aboutus.php');
     </div> -->
   </div>
   <section class="main py-1 my-1" id="home">
-    <div class="container text-center">
+    <div class="container">
       <div class="row py-3 my-1">
         <div class="col-lg-12 col-md-12 col-sm-12 py-1">
 
           <div class="line my-1">
             <p>
-              <bold><?php echo $about_us; ?></bold>
+              <div class='txt'><?php echo $about_us; ?></div>
             </p>
-          </div>
+          </div><br><br>
 
           <?php
           if (isset($_POST['read_more'])) { ?>
@@ -91,7 +91,7 @@ include('include_aboutus.php');
                 <p>
                   <?php
                   $hide = 2;
-                  echo "<bold>" . $extra_info . "</bold>"; ?>
+                  echo "<div class='txt'>" . $extra_info . "</div>"; ?>
                 </p>
               </div>
             </section>
