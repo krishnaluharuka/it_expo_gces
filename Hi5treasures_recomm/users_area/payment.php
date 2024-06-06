@@ -25,26 +25,26 @@ if (!isset($user_name)) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link href="../css/style.css" rel="stylesheet">
     <style>
-        body{
+        /* body{
             overflow-x: hidden;
-            background-image: url('../images/bg8.avif');
+            background-image: url('../images/payment.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             margin: 0;
-        }
+        } */
         .bg {
             background-color: antiquewhite;
         }
 
         .full-height {
-            height: 100vh;
+            height: 80vh;
         }
-        div.card{
+        h1{
             opacity: 0.8;
         }
 
-        div.card:hover{
+        h1:hover{
             opacity: 1;
         }
     </style>
@@ -62,12 +62,12 @@ if (!isset($user_name)) {
     ?>
     <div class="container full-height d-flex justify-content-center align-items-center">
         <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 my-3">
                 <div class="text-center w-100">
                 <a href="../contact.php" class="text-decoration-none text-dark">
-                    <div class='card bg border shadow rounded'>
-                        <div class='card-body'>
-                            <h5 class='card-title'>
+                    <div class="bg border shadow rounded">
+                        <div class="body">
+                            <h5 class="title">
                                 <h1>Customize Product</h1>
                                 </a>
 
@@ -77,13 +77,13 @@ if (!isset($user_name)) {
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="text-center w-100">
                 <a href="order.php?user_id=<?php echo $user_id ?>" class="text-decoration-none text-dark">
-                    <div class='card bg border shadow rounded'>
-                        <div class='card-body'>
-                            <h5 class='card-title'>
-                                <i class="bi bi-currency-rupee d-block fs-1 mb-3"></i>
+                    <div class="bg border shadow rounded">
+                        <div class="body">
+                            <h5 class="title">
+                                <!-- <i class="bi bi-currency-rupee d-block fs-1 mb-3"></i> -->
                                     <h1>Make Payment</h1>
                                 </a>
 
@@ -96,6 +96,7 @@ if (!isset($user_name)) {
 
         </div>
     </div>
+   
 </body>
 
 </html>
