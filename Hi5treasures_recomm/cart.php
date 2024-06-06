@@ -5,8 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
 include('includes/connect.php');
 include('functions/common_functions.php');
 include('include_aboutus.php');
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +18,6 @@ include('include_aboutus.php');
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
   <link href="css/style.css" rel="stylesheet">
-
   <style>
     .bi-journal-text {
       font-size: 23px;
@@ -182,6 +179,7 @@ include('include_aboutus.php');
                 $cart_query = "SELECT * FROM `cart_details` WHERE ip_address='$get_ip_address'";
                 $result = mysqli_query($con, $cart_query);
                 $result_count = mysqli_num_rows($result);
+                $error_ids = [];
 
                 if ($result_count > 0) {
                   echo "<thead>
@@ -205,13 +203,14 @@ include('include_aboutus.php');
                       $product_title = $row_product_price['product_title'];
                       $product_image1 = $row_product_price['product_image1'];
                       $product_quantity = $row['quantity'];
+                      
                       $total_product_price = $product_price * $product_quantity;
                       $total_price += $total_product_price;
                 ?>
                       <tr>
                         <td><?php echo $product_title; ?></td>
                         <td><img src="./admin_area/product_images/<?php echo $product_image1; ?>" alt="<?php echo $product_title; ?>" height="100" width="100" style="object-fit: contain;"></td>
-                        <td><input type="number" name="quantity[<?php echo $product_id; ?>]" class="form-input w-50" value="<?php echo $product_quantity; ?>"></td>
+                        <td><input type="number" id="quantity-<?php echo $product_id; ?>" name="quantity[<?php echo $product_id; ?>]" class="form-input w-50" value="<?php echo $product_quantity; ?>"></td>
                         <td><?php echo $product_price . '/-'; ?></td>
                         <td><input type="checkbox" name="removeitem[]" value="<?php echo $product_id; ?>"></td>
                         <td>
@@ -231,10 +230,25 @@ include('include_aboutus.php');
                 <?php
                 if (isset($_POST['update_cart'])) {
                   foreach ($_POST['quantity'] as $product_id => $quantity) {
-                    $update_cart = "UPDATE `cart_details` SET quantity=$quantity WHERE ip_address='$get_ip_address' AND product_id='$product_id'";
-                    mysqli_query($con, $update_cart);
+                    if ($quantity < 1) {
+                      $error_ids[] = $product_id;
+                    } else {
+                      $update_cart = "UPDATE `cart_details` SET quantity=$quantity WHERE ip_address='$get_ip_address' AND product_id='$product_id'";
+                      mysqli_query($con, $update_cart);
+                    }
                   }
-                  echo "<script>window.open('cart.php', '_self')</script>";
+                  if (empty($error_ids)) {
+                    echo "<script>window.open('cart.php', '_self')</script>";
+                  } else {
+                    echo "<script>
+                      document.addEventListener('DOMContentLoaded', function() {
+                        " . implode("", array_map(function($id) {
+                          return "document.getElementById('quantity-$id').focus();";
+                        }, $error_ids)) . "
+                        alert('Please add correct Quantity');
+                      });
+                    </script>";
+                  }
                 }
                 ?>
 
@@ -252,6 +266,7 @@ include('include_aboutus.php');
                         <input type='submit' value='Continue Shopping' class='mbtn5 mx-1 my-1' name='continue_shopping'>
                         <button class='mbtn5 mx-1 my-1'><a href='./users_area/checkout.php' value='Checkout' class='text-light text-decoration-none'>Checkout</a></button>
                         <input type='submit' value='Delete ALL' class='mbtn5 mx-1 my-1' name='delete_all'>";
+              
             } else {
               echo "<div class='container d-flex justify-content-center'><input type='submit' value='Shop Now' class='mbtn5 px-3 mx-1 my-3' name='continue_shopping'></div>";
             }
@@ -296,9 +311,6 @@ include('include_aboutus.php');
       echo "<script>window.open('cart.php','_self')</script>";
     }
   }
-
-
-
   ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
