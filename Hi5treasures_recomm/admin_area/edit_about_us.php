@@ -97,7 +97,7 @@ if (isset($_POST['update_about_us']))
 <body>
     <div class="container mt-5">
         <h2 class="text-center my-5">EDIT <span class="px-4">ABOUT US</span></h2>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" enctype="multipart/form-data">
+        <form action=" " method="post" enctype="multipart/form-data">
             <div class="form-outline w-50 m-auto mb-4">
                 <label for="company_name" class="form-label">Company Name</label>
                 <input type="text" id="company_name" name="company_name" value="<?php echo $company_name; ?>" class="form-control my-3" required="required">
@@ -133,7 +133,7 @@ if (isset($_POST['update_about_us']))
             <div class="form-outline mb-4 w-50 m-auto">
                 <label for="contact" class="form-label">Contact</label>
                 <input type="text" name="contact" id="contact" class="form-control my-3" value="<?php echo $contact; ?>" required="required" autocomplete="off">
-                <?php echo $contactErr; ?>
+                <p class="text-danger"><?php echo $contactErr; ?></p>
             </div>
 
             <!-- Location -->
@@ -179,6 +179,7 @@ if (isset($_POST['update_about_us']))
             </div>
         </form>
     </div> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
