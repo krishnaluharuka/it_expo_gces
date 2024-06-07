@@ -20,7 +20,7 @@ if (isset($_POST['user_register']) && isset($_POST['user_email'])) {
 
 
     if (!preg_match("/^[a-zA-Z-' ]*$/", $user_username)) {
-            $nameErr = "Invalid company name. Only letters, spaces, and hyphens are allowed.";
+            $nameErr = "Invalid name. Only letters, spaces, and hyphens are allowed.";
         }
     if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Invalid email format.";
